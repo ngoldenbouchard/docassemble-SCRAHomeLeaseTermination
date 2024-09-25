@@ -1,0 +1,385 @@
+---
+metadata:
+  title: |
+    SCRA Home Lease Termination Letter
+  short title: |
+    SCRA Home Lease Termination
+  description: |
+    The SCRA Home Lease Termination Letter interview will help you draft a letter to a landlord requesting termination of your lease based on new orders for deployment or change in station.
+  #exit url: https://www.masslegalservices.org/content/online-snap-calculator
+  show login: False
+  #generate download screen: True
+---
+include: 
+  - docassemble.AssemblyLine:assembly_line.yml
+  - custom_ssl_theme.yml
+  #- custom_ptla_theme_ngb.yml
+  #- MaineDebtCollectionHelper-calculations.yml
+---
+default screen parts:
+  footer: |
+    [:share-alt-square: Share](${ url_ask([{'undefine': ['al_sharing_type','al_how_share_link']}, 'al_share_form_screen', {'recompute': ['al_did_share_form']}, 'al_share_results']) })
+    [:info-circle: About](${ url_action('about_this_interview') })
+    [:comment-dots: Feedback](https://forms.office.com/Pages/ResponsePage.aspx?id=gOsuS1HkzESOjJ_IxTUKuD8iguCNz0RHpK3V26oh9QpUQkJPTTc3UTBZU0cxVEpOQlMzSlc1R1gzQy4u){:target="_blank"}
+---
+features:
+  question back button: True
+  navigation back button: False
+   #theme file downloaded from: bootstrap theme: https://bootswatch.com/cerulean/bootstrap.min.css
+  css: 
+    - ssltheme.css
+    #- ptlatheme.css
+    #- bootstrap.min.css
+  hide navbar: False 
+  debug: False
+---
+modules:
+  - docassemble.base.core
+---
+template: PTLA_terms_of_use
+content: |
+  ## StatesideLegal's Terms of Use and Privacy Policy
+
+  This website is free to use.
+  StatesideLegal hosts this site.
+
+  ### You need to know
+
+  * This website does not provide legal advice. If you need legal advice, contact a lawyer.
+
+  * The information and documents on this website have no warranty. We provide the information “as-is.” By using the site, you agree not to hold StatesideLegal, Pine Tree Legal Assistance, and/or the information providers on this site liable.
+
+  * We work hard to keep the information on the site up to date. Lawyers drafted and reviewed the documents this site uses. But laws and rules change over time. These changes can make a document unenforceable when you use it.
+
+  * We do our best to keep the site working! To do that, we allow you to submit feedback so we can track problems on the site. But we cannot provide individual technical support. 
+
+  ### To use this site
+
+  * You need to be over 13 to use this site. 
+
+  * This site is for anyone 13 and over. For example: you can be the person who needs the help, a lawyer, or a social worker.
+
+  * You may not sell the information or the contents of this site. But you can charge for your own time. 
+
+  * Please keep your use fair. Do not use this site in a way that is illegal or that makes it harder for other people to use.
+
+  ### Information we and others collect
+
+  * We collect the information that you type to help you complete your forms. We delete all information 180 days after you last update it. You can also delete information immediately.
+
+  * We log information including IP addresses and web browsers from all visitors. We use this information to keep our site secure. We keep logs for up to 180 days.
+
+  * We use Google Analytics to learn how people use our website. This helps us understand which pages are hardest to use. Google may use this information to show you better advertisements.
+
+  * We use email and text message delivery services that may keep their own records of any messages you send. If you choose to log in with your phone number, this may include a record of the times you log in to the site.
+
+  ### We keep your information safe
+
+  * We use the same technology that banks and online stores use to keep your information safe.
+  
+  * We use:
+    * 256 bit encryption
+    
+    * Continual monitoring
+    
+    * Limited access controls
+    
+    * Regular security updates
+    
+    * Software firewalls
+
+  ### Sharing your information
+
+  * We never sell your information.
+
+  * We share anonymous information with a small number of nonprofits and researchers. We use the information to improve our site and to improve free legal help for veterans.
+
+  * When you visit some pages of the site, the site may ask if you want to apply to get a free lawyer from legal aid. You get to decide if you want to share your personal information.
+
+  * You may choose to email completed forms or share a link to your in-progress work at any time to any person.
+
+  ### These terms of use can change
+
+  * We may change these Terms of Use at any time with no notice. Please review the terms on a regular basis to see any changes.
+
+  * If you use the site after we make changes, you accept our changed Terms of Use.
+
+  The laws of Maine apply to these Terms of Use.
+
+  If a judge decides that one of the terms in this Terms of Use is unenforceable, it will not change the terms that remain.
+
+  ### If you still have questions
+
+  If you would like to access, correct, amend, or delete any personal information we have about you or have any other questions, contact us via our [email form](https://statesidelegal.org/contact) or at: 
+
+  StatesideLegal
+  
+  c/o Pine Tree Legal Assistance, Inc.
+  
+  88 Federal Street
+  
+  Portland, ME 04101
+---
+mandatory: True
+comment: |
+  Controls order and branching logic for questions specific to this form
+id: interview_order_SecurityDepositReturn
+code: |
+  HomeLeaseTerm_intro
+  users.gather()
+  set_parts(subtitle=str(users))
+  users[0].name
+  user_address
+  rank
+  set_progress(20)
+  landlord_name
+  landlord_address
+  set_progress(40)
+  #rental_address
+  rent_due_date
+  sd_add_address
+  deployment_location
+  set_progress(60)
+  perm_order
+  set_progress(80)
+  al_form_requires_digital_signature = False
+  basic_questions_signature_flow
+  users[0].signature
+  #security_deposit_letter_download
+  set_progress(100)
+  interview_order_SecurityDepositReturn = True
+---
+###################### Main order ######################
+comment: |
+  This block includes the logic for standalone interviews.
+  Delete mandatory: True to include in another interview
+mandatory: True
+code: |
+ HomeLeaseTerm_intro
+ users.gather()
+ set_parts(subtitle=str(users))
+ users[0].name
+ user_address
+ rank
+ set_progress(20)
+ landlord_name
+ landlord_address
+ set_progress(40)
+ #rental_address
+ rent_due_date
+ sd_add_address
+ deployment_location
+ set_progress(60)
+ perm_order
+ set_progress(80)
+ al_form_requires_digital_signature = False
+ basic_questions_signature_flow
+ users[0].signature 
+ #security_deposit_letter_download
+ set_progress(100)
+---
+comment: |
+  This question is used to introduce your interview. Please customize
+id: HLTL_intro
+continue button field: HomeLeaseTerm_intro
+question: |
+  SCRA Home Lease Termination Letter
+subquestion: |
+  The Servicemembers Civil Relief Act (SCRA) states that if you are called to active-duty and will remains so for 90 or more days, you can end your home lease early and without penalty if you follow specific directions. You must:
+
+   - Prove you signed the lease before you entered active duty and that you will remain on active duty for a minimum of 90 days.
+
+   - Provide your landlord with written notice of your intent to end the lease early and a copy of your military orders. 
+   
+  If you signed a lease or rental agreement <b>after</b> you began active-duty service, you may still be able to terminate the lease early without penalty if you:
+
+   - Received PCS or deployment orders that will last for more than 90 days.
+
+   - Provide your landlord with written notice of termination and a copy of your orders, with at least a 30-day notice. 
+   
+   If you comply with the requirements of the SCRA, your lease should end 30 days after your next monthly rent payment is due.
+
+  Use this interview to draft a letter to your landlord notifying them of your intent.
+ 
+  This is not legal advice. If you have questions about a landlord keeping part or all of your security deposit, you should contact a lawyer. You can [find assistance](https://www.statesidelegal.org/stateside-map) at StatesideLegal's Find Legal Help. 
+  
+  You can learn more about the SCRA in the [What is the Servicemembers Civil Relief Act? (Video).](https://www.statesidelegal.org/what-servicemembers-civil-relief-act-video).
+  
+  ${ display_template(PTLA_terms_of_use, scrollable=True, collapse=False) }
+fields:
+  - To continue, you must you must accept the terms of use: acknowledged_information_use
+    datatype: checkboxes
+    none of the above: False    
+    minlength: 1
+    choices:
+      - I accept the terms of use.
+    validation messages:
+      minlength: |
+        You cannot continue unless you agree to the terms of use.
+continue button label: Get started
+---
+id: Landlord
+question: |
+  About your landlord
+fields:
+  - What is your landlord's name?: landlord_name
+  #- What is your landlord's mailing address?: landlord_address 
+---
+id: Current address
+sets:
+  - users[0].address.address
+  - users[0].address.unit
+  - users[0].address.city    
+  - users[0].address.state
+  - users[0].address.zip
+question: |
+  What is your current address?
+subquestion: |
+  This is the address where you are ending your lease.
+fields:
+    - Street address: users[0].address.address
+    - Unit: users[0].address.unit
+      required: False
+    - City/Town: users[0].address.city
+    - State: users[0].address.state
+    - Zip code: users[0].address.zip
+continue button field: user_address
+---
+id: Landlord address
+sets:
+    - other_parties[0].address.address
+    - other_parties[0].address.unit
+    - other_parties[0].address.city
+    - other_parties[0].address.state
+    - other_parties[0].address.zip
+question:  |
+  What is your landlord's address?
+fields:
+  - code: |
+      other_parties[0].address_fields()
+continue button field: landlord_address
+---
+id: Previous Rental
+question: |
+  About the rental you are ending
+fields:
+  - When is your next rent payment due?: rent_due_date 
+    datatype: date
+#  - What was the total security deposit paid?: total_deposit
+#    datatype: currency    
+---
+id: About Your Rank and Military Branch
+question: |
+  More about you
+subquestion: |
+  What is your rank and military branch
+  
+fields:
+  - "What is your rank?": rank
+    maxlength: 25
+  - "What military branch are you in?": branch
+    maxlength: 30 
+---
+objects:
+  - sd_add: Individual
+---
+id: security deposit address
+sets:
+    - sd_add.address.address
+    - sd_add.address.unit
+    - sd_add.address.city
+    - sd_add.address.state
+    - sd_add.address.zip
+question:  |
+  What is the address where you would like your security deposit sent to you?
+subquestion: |
+  This should be an address where you can get mail after your current lease has ended. 
+  
+fields:
+    - Street address: sd_add.address.address
+    - Unit: sd_add.address.unit
+      required: False
+    - City/Town: sd_add.address.city
+    - State: sd_add.address.state
+    - Zip code: sd_add.address.zip
+
+continue button field: sd_add_address
+---
+objects:
+  - deployment: Individual
+---
+id: deployment location
+sets:
+    - deployment.address.city
+    - deployment.address.state
+    - deployment.address.country
+question:  |
+  Where are you being ordered for your active duty service?
+fields:
+    - Base: deployment.address.city
+    - State/Province: deployment.address.state
+    - Country: deployment.address.country
+
+continue button field: deployment_location
+---
+id: Order status
+question: |
+  What type of order do you have?
+fields: 
+  - Are your orders for a new permanent change of station?: perm_order
+    datatype: yesnoradio
+  - Are your orders for a deployment of 90 days or more?: temp_order
+    datatype: yesnoradio
+    show if:
+      variable: perm_order
+      is: False 
+  - STOP! If you do not have orders for a new permanent change of station or a deployment of 90 days or more, then you likely don't qualify for early lease termination under SCRA and this letter is not for you.: not_applicable
+    show if:
+      variable: temp_order
+      is: False 
+---
+mandatory: True
+code: |
+  term_date = (rent_due_date + date_interval(days=30)) 
+---
+mandatory: True
+code: |
+  if perm_order == True:
+    temp_order = False
+  else:
+    temp_order = True
+---
+objects:
+  - Next_Steps: ALDocument.using(title="Instructions", filename="SCRA_home_lease_term_next_steps.docx", enabled=True, has_addendum=False, default_overflow_message=AL_DEFAULT_OVERFLOW_MESSAGE)
+  - Home_Lease_Termination_Letter: ALDocument.using(title="Home Lease Termination Letter", filename="SCRAHomeLeaseTerminationLetter", enabled=True, has_addendum=False, default_overflow_message=AL_DEFAULT_OVERFLOW_MESSAGE)
+---
+objects:
+  - al_user_bundle: ALDocumentBundle.using(elements=[Next_Steps,Home_Lease_Termination_Letter], filename="home_lease_package.pdf", title="All documents to download for your records", enabled=True)
+  - al_recipient_bundle: ALDocumentBundle.using(elements=Next_Steps,Home_Lease_Termination_Letter], filename="home_lease_package.pdf", title="All documents to download for your records", enabled=True)  
+---  
+attachments:
+  - name: Home_Lease_Termination_Letter
+    filename: SCRAHomeLeaseTerminationLetter
+    docx template file: SCRAHomeLeaseTerminationLetter.docx
+    skip undefined: True
+    variable name: Home_Lease_Termination_Letter[i]
+    valid formats:
+      - pdf
+      - docx
+    fields:
+    - "tenancy_end_date": ${ rent_due_date + 30 }
+  - name: Next_Steps
+    filename: NextSteps - SCRAHomeLeaseTermination           
+    skip undefined: True
+    docx template file: SCRA_home_lease_term_next_steps.docx
+    variable name: Next_Steps[i]
+---
+mandatory: True
+question: |
+  All done! Below you can view, download, and email your completed letter. <p></p> 
+  <p>Please be sure to read the instructions. They will explain next steps depending on whether you have an attorney or not.</p>
+subquestion: |
+
+  ${ al_user_bundle.download_list_html() }    
+  
+  ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
