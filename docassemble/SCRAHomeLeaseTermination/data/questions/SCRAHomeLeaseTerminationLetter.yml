@@ -130,14 +130,14 @@ code: |
   set_parts(subtitle=str(users))
   users[0].name
   user_address
-  rank
+  sd_add_address
   set_progress(20)
   landlord_name
   landlord_address
   set_progress(40)
   #rental_address
   rent_due_date
-  sd_add_address
+  rank
   deployment_location
   set_progress(60)
   perm_order
@@ -160,14 +160,14 @@ code: |
  set_parts(subtitle=str(users))
  users[0].name
  user_address
- rank
+ sd_add_address
  set_progress(20)
  landlord_name
  landlord_address
  set_progress(40)
  #rental_address
  rent_due_date
- sd_add_address
+ rank
  deployment_location
  set_progress(60)
  perm_order
@@ -185,23 +185,24 @@ continue button field: HomeLeaseTerm_intro
 question: |
   SCRA Home Lease Termination Letter
 subquestion: |
-  The Servicemembers Civil Relief Act (SCRA) states that if you are called to active-duty and will remains so for 90 or more days, you can end your home lease early and without penalty if you follow specific directions. You must:
+  Use this interview to draft a letter to your landlord notifying them of your intent to terminate your housing lease under the Servicemembers Civil Relief Act (SCRA).
+  
+  Under the SCRA, if you're called to active duty for 90 days or more, you can break your housing lease early without penalty if you:
 
-   - Prove you signed the lease before you entered active duty and that you will remain on active duty for a minimum of 90 days.
+    - Signed the lease before starting active duty and will be on active duty for at least 90 days.
 
-   - Provide your landlord with written notice of your intent to end the lease early and a copy of your military orders. 
-   
-  If you signed a lease or rental agreement <b>after</b> you began active-duty service, you may still be able to terminate the lease early without penalty if you:
+    - Give your landlord written notice and a copy of your military orders.
 
-   - Received PCS or deployment orders that will last for more than 90 days.
+  If you signed the lease after starting active duty, you can still break it if:
 
-   - Provide your landlord with written notice of termination and a copy of your orders, with at least a 30-day notice. 
-   
-   If you comply with the requirements of the SCRA, your lease should end 30 days after your next monthly rent payment is due.
+    - You receive PCS or deployment orders for more than 90 days.
 
-  Use this interview to draft a letter to your landlord notifying them of your intent.
- 
-  This is not legal advice. If you have questions about a landlord keeping part or all of your security deposit, you should contact a lawyer. You can [find assistance](https://www.statesidelegal.org/stateside-map) at StatesideLegal's Find Legal Help. 
+    - Provide written notice and a copy of your orders with at least 30 days' notice.
+
+  Your lease should end 30 days after your next rent payment is due if you follow these steps.
+  
+  
+  NOTE: This is not legal advice. If you have detailed questions about terminating your lease under the SCRA, you should contact a lawyer. You can [find assistance](https://www.statesidelegal.org/stateside-map) at StatesideLegal's Find Legal Help. 
   
   You can learn more about the SCRA in the [What is the Servicemembers Civil Relief Act? (Video).](https://www.statesidelegal.org/what-servicemembers-civil-relief-act-video).
   
@@ -220,7 +221,7 @@ continue button label: Get started
 ---
 id: Landlord
 question: |
-  About your landlord
+  About Your Landlord
 fields:
   - What is your landlord's name?: landlord_name
   #- What is your landlord's mailing address?: landlord_address 
@@ -235,7 +236,8 @@ sets:
 question: |
   What is your current address?
 subquestion: |
-  This is the address where you are ending your lease.
+  Note: This should be the address where you are ending your lease.
+  <p>  </p>
 fields:
     - Street address: users[0].address.address
     - Unit: users[0].address.unit
@@ -261,7 +263,7 @@ continue button field: landlord_address
 ---
 id: Previous Rental
 question: |
-  About the rental you are ending
+  About the Lease you are Ending
 fields:
   - When is your next rent payment due?: rent_due_date 
     datatype: date
@@ -270,9 +272,9 @@ fields:
 ---
 id: About Your Rank and Military Branch
 question: |
-  More about you
-subquestion: |
-  What is your rank and military branch
+  More about your service
+#subquestion: |
+#  What is your rank and military branch
   
 fields:
   - "What is your rank?": rank
@@ -293,8 +295,8 @@ sets:
 question:  |
   What is the address where you would like your security deposit sent to you?
 subquestion: |
-  This should be an address where you can get mail after your current lease has ended. 
-  
+  Note: This should be an address where you can get mail after your current lease has ended. 
+  <p> </p>
 fields:
     - Street address: sd_add.address.address
     - Unit: sd_add.address.unit
@@ -316,7 +318,7 @@ sets:
 question:  |
   Where are you being ordered for your active duty service?
 fields:
-    - Base: deployment.address.city
+    - Base or City: deployment.address.city
     - State/Province: deployment.address.state
     - Country: deployment.address.country
 
