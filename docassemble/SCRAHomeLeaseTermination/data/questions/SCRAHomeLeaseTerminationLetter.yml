@@ -123,7 +123,7 @@ content: |
 mandatory: True
 comment: |
   Controls order and branching logic for questions specific to this form
-id: interview_order_SecurityDepositReturn
+id: interview_order_HomeLeaseTerminationLetter
 code: |
   HomeLeaseTerm_intro
   users.gather()
@@ -141,6 +141,8 @@ code: |
   deployment_location
   set_progress(60)
   perm_order
+  if temp_order == False and perm_order == False:
+     stop_interview 
   set_progress(80)
   al_form_requires_digital_signature = False
   basic_questions_signature_flow
@@ -171,6 +173,8 @@ code: |
  deployment_location
  set_progress(60)
  perm_order
+ if temp_order == False and perm_order == False:
+     stop_interview 
  set_progress(80)
  al_form_requires_digital_signature = False
  basic_questions_signature_flow
@@ -185,24 +189,22 @@ continue button field: HomeLeaseTerm_intro
 question: |
   SCRA Home Lease Termination Letter
 subquestion: |
-  Use this interview to draft a letter to your landlord notifying them of your intent to terminate your housing lease under the Servicemembers Civil Relief Act (SCRA).
+  Use this interview to help you write a letter to your landlord, telling them you want to end your housing lease early under the Servicemembers Civil Relief Act (SCRA).
   
-  Under the SCRA, if you're called to active duty for 90 days or more, you can break your housing lease early without penalty if you:
-
-    - Signed the lease before starting active duty and will be on active duty for at least 90 days.
-
-    - Give your landlord written notice and a copy of your military orders.
-
-  If you signed the lease after starting active duty, you can still break it if:
-
-    - You receive PCS or deployment orders for more than 90 days.
-
-    - Provide written notice and a copy of your orders with at least 30 days' notice.
-
-  Your lease should end 30 days after your next rent payment is due if you follow these steps.
+  Under the SCRA, you can break your lease early without penalty if:
   
+  - You signed the lease before starting active duty,  
+  - Your duty lasts at least 90 days, and 
+  - You give your landlord written notice and a copy of your military orders
+
+  If you signed the lease after starting active duty, you can still end it early if:
   
-  NOTE: This is not legal advice. If you have detailed questions about terminating your lease under the SCRA, you should contact a lawyer. You can [find assistance](https://www.statesidelegal.org/stateside-map) at StatesideLegal's Find Legal Help. 
+  - You get Permanent Change of Station (PCS) or deployment orders for more than 90 days, and
+  - You provide at least a 30-day written notice along with your orders.
+  
+  If you follow these steps, your lease should end 30 days after your next rent payment is due.
+ 
+  NOTE: <b>This is not legal advice.</b> If you have detailed questions about terminating your lease under the SCRA, you should contact a lawyer. You can [find assistance](https://www.statesidelegal.org/stateside-map) at StatesideLegal's Find Legal Help. 
   
   You can learn more about the SCRA in the [What is the Servicemembers Civil Relief Act? (Video).](https://www.statesidelegal.org/what-servicemembers-civil-relief-act-video).
   
@@ -291,18 +293,21 @@ sets:
     - sd_add.address.unit
     - sd_add.address.city
     - sd_add.address.state
+    - sd_add.address.country
     - sd_add.address.zip
+
 question:  |
-  What is the address where you would like your security deposit sent to you?
+  What is the address where you'd like your landlord to send any money owed to you?
 subquestion: |
   Note: This should be an address where you can get mail after your current lease has ended. 
   <p> </p>
 fields:
-    - Street address: sd_add.address.address
+    - Street address/PO Box: sd_add.address.address
+      required: False
     - Unit: sd_add.address.unit
       required: False
-    - City/Town: sd_add.address.city
-    - State: sd_add.address.state
+    - City or Military Installation if abroad: sd_add.address.city
+    - State or Military Region if abroad: sd_add.address.state
     - Zip code: sd_add.address.zip
 
 continue button field: sd_add_address
@@ -324,6 +329,9 @@ fields:
 
 continue button field: deployment_location
 ---
+code: |
+  exit_button = [{'action': 'https://statesidelegal.org', 'label': 'Exit', 'icon': 'sign-out-alt', 'color': 'danger'}]
+---
 id: Order status
 question: |
   What type of order do you have?
@@ -334,11 +342,33 @@ fields:
     datatype: yesnoradio
     show if:
       variable: perm_order
-      is: False 
-  - STOP! If you do not have orders for a new permanent change of station or a deployment of 90 days or more, then you likely don't qualify for early lease termination under SCRA and this letter is not for you.: not_applicable
-    show if:
-      variable: temp_order
-      is: False 
+      is: False
+---
+code: |
+  exit_button = [{'action': 'https://statesidelegal.org', 'label': 'Exit', 'icon': 'sign-out-alt', 'color': 'danger'}]
+
+---
+id: Stop interview
+question:  |
+  <b>  </b> 
+  <img src="https://apps-dev.ptla.org/playgroundstatic/SCRAHomeLeaseTermination/6/two_red_stop_signs_set.jpg" alt="Stop sign image and upheld hand with red background" style="width: 25%; height: auto;">
+  
+subquestion: |
+  If you <b>do not</b> have orders for a permanent change of station or a deployment of 90 days or more, this letter does not apply to you. You should exit the interview and speak with your local JAG office for guidance.
+  
+  You can click on the 'Next' button to complete the interview and view a sample letter. Just remember, it's only a sample. You should not send it to your landlord. 
+
+  If you <b>do</b> have orders but accidentally said you didn’t, click the 'Undo' link and correct your answer.
+  
+  
+  
+  <p>   </p>
+
+
+action buttons:
+  code: exit_button
+
+continue button field: stop_interview
 ---
 mandatory: True
 code: |
