@@ -20,7 +20,7 @@ default screen parts:
   footer: |
     [:share-alt-square: Share](${ url_ask([{'undefine': ['al_sharing_type','al_how_share_link']}, 'al_share_form_screen', {'recompute': ['al_did_share_form']}, 'al_share_results']) })
     [:info-circle: About](${ url_action('about_this_interview') })
-    [:comment-dots: Feedback](https://forms.office.com/Pages/ResponsePage.aspx?id=gOsuS1HkzESOjJ_IxTUKuD8iguCNz0RHpK3V26oh9QpUQkJPTTc3UTBZU0cxVEpOQlMzSlc1R1gzQy4u){:target="_blank"}
+    [:comment-dots: Feedback](https://forms.office.com/Pages/ResponsePage.aspx?id=gOsuS1HkzESOjJ_IxTUKuD8iguCNz0RHpK3V26oh9QpURFFRSjNMRDMyUkJDQlhIUzNDMVpSWktBUy4u){:target="_blank"}
 ---
 features:
   question back button: True
@@ -75,18 +75,17 @@ content: |
 
   ### We keep your information safe
 
-  * We use the same technology that banks and online stores use to keep your information safe.
+  We use the same technology that banks and online stores use to keep your information safe. This includes:
   
-  * We use:
-    * 256 bit encryption
+  * 256 bit encryption
     
-    * Continual monitoring
+  * Continual monitoring
     
-    * Limited access controls
+  * Limited access controls
     
-    * Regular security updates
+  * Regular security updates
     
-    * Software firewalls
+  * Software firewalls
 
   ### Sharing your information
 
@@ -204,9 +203,9 @@ subquestion: |
   
   If you follow these steps, your lease should end 30 days after your next rent payment is due.
  
-  NOTE: <b>This is not legal advice.</b> If you have detailed questions about terminating your lease under the SCRA, you should contact a lawyer. You can [find assistance](https://www.statesidelegal.org/stateside-map) at StatesideLegal's Find Legal Help. 
+  <b>Please Note: This is not legal advice.</b> If you have detailed questions about terminating your lease under the SCRA, you should contact a lawyer. You can [find assistance](https://www.statesidelegal.org/stateside-map) at StatesideLegal's Find Legal Help tool. 
   
-  You can learn more about the SCRA in the [What is the Servicemembers Civil Relief Act? (Video).](https://www.statesidelegal.org/what-servicemembers-civil-relief-act-video).
+  You can learn more about the SCRA in the video [What is the Servicemembers Civil Relief Act?](https://www.statesidelegal.org/what-servicemembers-civil-relief-act-video) at StatesideLegal.org. 
   
   ${ display_template(PTLA_terms_of_use, scrollable=True, collapse=False) }
 fields:
@@ -409,8 +408,10 @@ attachments:
 mandatory: True
 question: |
   All done! Below you can view, download, and email your completed letter. <p></p> 
-  <p>Please be sure to read the instructions. They will explain next steps depending on whether you have an attorney or not.</p>
+  <p>Please be sure to read the instructions. They explain your next steps and provide additional information. </p>
 subquestion: |
+
+  <b> NOTE: </b> Once you close out of this webpage, you will not be able to access your completed letter again. Make sure you download and print your letter and instructions before closing out this page.
 
   ${ al_user_bundle.download_list_html() }    
   
