@@ -258,8 +258,15 @@ sets:
 question:  |
   What is your landlord's address?
 fields:
-  - code: |
-      other_parties[0].address_fields()
+  - Street address: other_parties[0].address.address
+  - Unit: other_parties[0].address.unit
+    required: False
+  - City/Town: other_parties[0].address.city
+  - State: other_parties[0].address.state
+  - Zip code: other_parties[0].address.zip
+  
+#  - code: |
+#      other_parties[0].address_fields()
 continue button field: landlord_address
 ---
 id: Previous Rental
@@ -328,8 +335,14 @@ fields:
 
 continue button field: deployment_location
 ---
+#Exit button if the user does not meet the criteria of the letter
 code: |
-  exit_button = [{'action': 'https://statesidelegal.org', 'label': 'Exit', 'icon': 'sign-out-alt', 'color': 'danger'}]
+  exit_button = [{'action': 'https://legalassistance.law.af.mil', 'label': 'Exit', 'icon': 'sign-out-alt', 'color': 'danger'}]
+
+---
+#Exit button after the user is done with the interview
+code: |
+  exit_button2 = [{'action': 'https://statesidelegal.org', 'label': 'Exit', 'icon': 'sign-out-alt', 'color': 'danger'}]
 ---
 id: Order status
 question: |
@@ -343,17 +356,13 @@ fields:
       variable: perm_order
       is: False
 ---
-code: |
-  exit_button = [{'action': 'https://statesidelegal.org', 'label': 'Exit', 'icon': 'sign-out-alt', 'color': 'danger'}]
-
----
 id: Stop interview
 question:  |
   <b>  </b> 
   <img src="https://apps-dev.ptla.org/playgroundstatic/SCRAHomeLeaseTermination/6/two_red_stop_signs_set.jpg" alt="Stop sign image and upheld hand with red background" style="width: 25%; height: auto;">
   
 subquestion: |
-  If you <b>do not</b> have orders for a permanent change of station or a deployment of 90 days or more, this letter does not apply to you. You should exit the interview and speak with your local JAG office for guidance.
+  If you <b>do not</b> have orders for a permanent change of station or a deployment of 90 days or more, this letter does not apply to you. Please use the exit button below to find your local JAG office for advice.
   
   You can click on the 'Next' button to complete the interview and view a sample letter. Just remember, it's only a sample. You should not send it to your landlord. 
 
@@ -411,8 +420,12 @@ question: |
   <p>Please be sure to read the instructions. They explain your next steps and provide additional information. </p>
 subquestion: |
 
-  <b> NOTE: </b> Once you close out of this webpage, you will not be able to access your completed letter again. Make sure you download and print your letter and instructions before closing out this page.
+  <b> NOTE: </b> Once you close out of this webpage or click the red "Exit" button, you will not be able to access your completed letter again. Make sure you download and print your letter and instructions before closing out this page.
+  <p>   </p>
 
   ${ al_user_bundle.download_list_html() }    
   
   ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
+  
+action buttons:
+  code: exit_button2
